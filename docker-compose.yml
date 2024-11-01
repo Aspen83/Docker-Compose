@@ -1,0 +1,70 @@
+########################### NETWORKS
+networks:
+  default:
+    driver: bridge
+  server:
+    name: server
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.1.0.0/24
+#  socket_proxy:
+#    name: socket_proxy
+#    driver: bridge
+#    ipam:
+#      config:
+#        - subnet: 10.2.0.0/24
+
+########################### SERVICES
+include:
+  # arr
+  - compose/arr/bazarr.yml
+  - compose/arr/prowlarr.yml
+  - compose/arr/radarr.yml
+  - compose/arr/sabnzbd.yml
+  - compose/arr/sonarr.yml
+  - compose/arr/overseerr.yml
+  - compose/arr/gluetun.yml
+  - compose/arr/qbittorrent.yml
+  - compose/arr/flaresolverr.yml
+  - compose/arr/readarr.yml
+  - compose/arr/lidarr.yml       
+  # Data
+  - compose/data/filebrowser.yml
+  - compose/data/vaultwarden.yml
+  - compose/data/mealie.yml
+#  - compose/data/calibre.yml
+#  - compose/data/nextcloud.yml  
+#  - compose/data/mariadb.yml  
+  - compose/data/linkwarden.yml
+#  - compose/data/actual-server.yml
+  - compose/data/scrutiny.yml
+#  - compose/data/cloudbeaver.yml
+
+  # Media
+  - compose/media/plex.yml
+  - compose/media/tautulli.yml
+  - compose/media/spotify.yml
+  
+  # Misc
+  - compose/misc/mc-server.yml
+  - compose/misc/romm.yml
+  # Network
+#  - compose/services/virola.yml
+  - compose/network/speedtest.yml
+  - compose/services/watchtower.yml
+  - compose/network/chromium.yml
+#  - compose/network/firefox.yml
+#  - compose/network/homeassistant.yml
+  - compose/services/deunhealth.yml
+  - compose/services/homepage.yml
+#  - compose/network/wireshark.yml  
+#  - compose/services/watch.yml  
+  # Proxy
+#  - compose/proxy/docker-gc.yml
+  - compose/proxy/dozzle.yml
+  - compose/proxy/portainer.yml
+#  - compose/proxy/socket-proxy.yml
+  - compose/proxy/npm.yml
+#  - compose/services/ntop.yml
+#  - compose/services/netalertx.yml
