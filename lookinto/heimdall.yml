@@ -1,0 +1,20 @@
+services:
+  heimdall:
+    image: lscr.io/linuxserver/heimdall:latest
+    networks:
+      - server
+    container_name: heimdall
+    ports:
+      - 5080:80
+      - 5443:443
+
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - $APPDATA/services/heimdall:/config
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

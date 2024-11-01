@@ -1,0 +1,19 @@
+services:
+  lidarr:
+    image: lscr.io/linuxserver/lidarr:latest
+    container_name: lidarr
+    networks:
+      - server
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: 'America/New_York'
+    ports:
+      - 8484:8686
+    volumes:
+      - $APPDATA/arr/lidarr:/config
+      - $MEDIADIR/music:/data/media/music
+      - $DATADIR/downloads:/data/downloads
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

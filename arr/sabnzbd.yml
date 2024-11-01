@@ -1,0 +1,20 @@
+services:
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    networks:
+      - server
+    ports:
+      - 8380:8080
+    privileged: true
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - $APPDATA/arr/sabnzbd:/config
+      - $DATADIR/downloads:/data/downloads
+      - $DATADIR/incomplete:/data/incomplete-downloads 
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

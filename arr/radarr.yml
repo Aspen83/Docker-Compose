@@ -1,0 +1,23 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest 
+    container_name: radarr
+    networks:
+      - server
+    ports:
+      - 7878:7878
+
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - $APPDATA/arr/radarr:/config
+      - $MEDIADIR/movies:/data/media/movies
+      - $MEDIADIR2/movies:/data/media/movies2
+      - $MEDIADIR3/movies:/data/media/movies3
+      - $DATADIR/downloads:/data/downloads
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

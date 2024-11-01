@@ -1,0 +1,14 @@
+services:
+  virola-server:
+    image: providesupport/virola-server:latest
+    container_name: virola
+    networks:
+      - server
+    stdin_open: true
+    tty: true
+    ports:
+      - 8888:7777/tcp
+      - 8888:7777/udp
+    volumes:
+      - $APPDATA/virola-storage:/virola
+    

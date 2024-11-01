@@ -1,0 +1,42 @@
+services:
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr
+    networks:
+      - server
+    ports: 
+      - 6767:6767
+    volumes:
+      - $APPDATA/arr/bazarr:/config
+      - $MEDIADIR/movies:/data/media/movies
+      - $MEDIADIR2/movies:/data/media/movies2
+      - $MEDIADIR3/movies:/data/media/movies3
+      - $MEDIADIR/tv:/data/media/tv
+      - $MEDIADIR2/tv:/data/media/tv2
+      - $MEDIADIR3/tv:/data/media/tv3
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  bazarr-anime:
+    image: lscr.io/linuxserver/bazarr
+    container_name: bazarr-anime
+    networks:
+      - server
+    ports: 
+      - 6768:6767
+    volumes:
+      - $APPDATA/arr/bazarr-anime:/config
+      - $MEDIADIR/anime:/data/media/anime
+      - $MEDIADIR2/anime:/data/media/anime2
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

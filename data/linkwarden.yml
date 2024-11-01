@@ -1,0 +1,30 @@
+services:
+  linkwarden:
+    container_name: linkwarden
+    env_file: .envlink
+    networks:
+      - server
+    ports:
+      - 3002:3000
+    environment:
+      - DATABASE_URL=postgresql://linkdb:malo6256@linkdb:5432/linkdb
+    image: ghcr.io/linkwarden/linkwarden:latest 
+    volumes:
+      - $APPDATA/data/linkwarden/linkwarden-app:/data/data
+    security_opt:
+      - no-new-privileges:true
+    restart: always
+    depends_on:
+      - linkdb
+
+  linkdb:
+    container_name: linkdb
+    image: postgres
+    env_file: .envlink
+    networks:
+      - server
+    volumes:
+      - $APPDATA/data/linkwarden/linkdb:/var/lib/postgresql/data
+    security_opt:
+      - no-new-privileges:true
+    restart: always

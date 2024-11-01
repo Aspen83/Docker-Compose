@@ -1,0 +1,22 @@
+services:
+  wireshark:
+    image: lscr.io/linuxserver/wireshark:latest
+    container_name: wireshark
+    cap_add:
+      - NET_ADMIN
+    security_opt:
+      - seccomp:unconfined #optional
+#    network_mode: host
+    networks:
+      - server
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: 'America/New_York'
+      FM_HOME: /home/mperk
+    volumes:
+      - $APPDATA/network/wireshark:/config
+    ports:
+      - 2000:3000 #optional
+      - 2001:3001 #optional
+    restart: unless-stopped

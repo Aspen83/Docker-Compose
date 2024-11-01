@@ -1,0 +1,19 @@
+services:
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    networks:
+      - server
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: 'America/New_York'
+    volumes:
+      - $APPDATA/nextcloud/config:/config
+      - $CLOUD:/data
+    ports:
+      - 6443:443
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+

@@ -1,0 +1,50 @@
+services:
+  npm:
+    container_name: npm
+    image: 'jc21/nginx-proxy-manager:latest'
+    networks:
+      - server
+    ports:
+      # These ports are in format <host-port>:<container-port>
+      - 80:80 # Public HTTP Port
+      - 443:443 # Public HTTPS Port
+      - 81:81 # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+    environment:
+      TZ: 'America/New_York'
+      # Mysql/Maria connection parameters:
+      #DB_MYSQL_HOST: "npm-db"
+      #DB_MYSQL_PORT: 3306
+      #DB_MYSQL_USER: "npm"
+      #DB_MYSQL_PASSWORD: "npm"
+      #DB_MYSQL_NAME: "npm"
+      # Uncomment this if IPv6 is not enabled on your host
+      DB_SQLITE_FILE: "/data/database.sqlite"
+      DISABLE_IPV6: 'true'
+    volumes:
+      - $APPDATA/proxy/npm/:/data
+      - $APPDATA/proxy/letsencrypt:/etc/letsencrypt
+#    depends_on:
+#      - npm-db
+    healthcheck:
+      test: ["CMD", "/usr/bin/check-health"]
+      interval: 10s
+      timeout: 3s
+
+    restart: unless-stopped
+
+#  npm-db:
+#    image: 'jc21/mariadb-aria:latest'
+#    container_name: npm-db
+#    networks:
+#      - server
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 'npm'
+#      MYSQL_DATABASE: 'npm'
+#      MYSQL_USER: 'npm'
+#      MYSQL_PASSWORD: 'npm'
+#      MARIADB_AUTO_UPGRADE: '1'
+#    volumes:
+#      - $APPDATA/proxy/mysql:/var/lib/mysql
+#    restart: unless-stopped

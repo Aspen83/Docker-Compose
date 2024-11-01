@@ -1,0 +1,13 @@
+services:
+  whatsupdocker:
+    image: fmartinou/whats-up-docker:latest
+    container_name: wud
+    networks:
+      - server
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 3110:3000
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

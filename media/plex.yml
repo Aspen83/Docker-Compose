@@ -1,0 +1,36 @@
+services:
+  pms-docker:
+    container_name: plex
+    image: plexinc/pms-docker
+#    network_mode: host
+    networks:
+      - server
+    ports:
+      - 32400:32400
+#      - 3005:3005/tcp
+#      - 8324:8324/tcp
+#      - 32469:32469/tcp
+#      - 1900:1900/udp
+#      - 32410:32410/udp
+#      - 32412:32412/udp
+#      - 32413:32413/udp
+#      - 32414:32414/udp
+    environment:
+      TZ: America/New_York
+#      ADVERTISE_IP: http://10.0.0.2:32400/
+
+    volumes:
+      - $APPDATA/media/plex:/config
+      - $APPDATA/media/temp:/transcode
+      - $MEDIADIR/movies:/data/movies
+      - $MEDIADIR2/movies:/data/movies2
+      - $MEDIADIR3/movies:/data/movies3
+      - $MEDIADIR/tv:/data/tv
+      - $MEDIADIR2/tv:/data/tv2
+      - $MEDIADIR3/tv:/data/tv3
+      - $MEDIADIR/anime:/data/anime
+      - $MEDIADIR2/anime:/data/anime2
+      - $MEDIADIR3/anime:/data/anime3        
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

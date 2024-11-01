@@ -1,0 +1,19 @@
+services:
+  readarr:
+    image: lscr.io/linuxserver/readarr:develop
+    container_name: readarr
+    networks:
+      - server
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/New_York
+    volumes:
+      - $APPDATA/arr/readarr:/config
+      - $MEDIADIR/books:/data/media/books
+      - $DATADIR/downloads:/data/downloads
+    ports:
+      - 8686:8787
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

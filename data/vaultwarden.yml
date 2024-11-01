@@ -1,0 +1,17 @@
+services:
+  valtwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    ports:
+      - 9080:80
+    networks:
+      - server
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - $APPDATA/services/vw-data:/data/
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

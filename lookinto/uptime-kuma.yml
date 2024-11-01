@@ -1,0 +1,21 @@
+services:
+  # Uptime Kuma - Status Page & Monitoring Server
+  uptime-kuma:
+    image: louislam/uptime-kuma
+    container_name: uptime-kuma
+    networks:
+      server:
+        ipv4_address: 10.0.5.85
+    ports:
+      - 8182:8182
+
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+    volumes:
+      - $DOCKERDIR/appdata/uptime-kuma:/app/data
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

@@ -1,0 +1,27 @@
+services:
+  your_spotify:
+    image: lscr.io/linuxserver/your_spotify:latest
+    container_name: your_spotify
+    networks:
+      - server
+    environment:
+      PUID: 1000
+      PGID: 1000
+      TZ: America/New_York
+      APP_URL: https://music.charliebeans.duckdns.org
+      SPOTIFY_PUBLIC: b00f0f19b6ae4684ad8c184365f3a84b 
+      SPOTIFY_SECRET: 3f3aacfb08fc44b5bbc5a2e5fb4318de
+      CORS: all # http://localhost:80,https://localhost:443
+      MONGO_ENDPOINT: mongodb://mongo:27017/your_spotify
+    ports:
+      - 2080:80
+      - 2443:443
+    restart: unless-stopped
+
+  mongo:
+    container_name: mongo
+    image: mongo:6
+    networks:
+      - server
+    volumes:
+      - $APPDATA/media/spotify/your_spotify_db:/data/db

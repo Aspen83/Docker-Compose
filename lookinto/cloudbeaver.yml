@@ -1,0 +1,15 @@
+services:
+  cloudbeaver-ee:
+    container_name: cloudbeaver
+    image: dbeaver/cloudbeaver:latest
+    tty: true
+    stdin_open: true
+    networks:
+      - server
+    ports:
+      - 8280:8978
+    volumes:
+      - $APPDATA/services/cloudbeaver:/opt/cloudbeaver/workspace
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

@@ -1,0 +1,20 @@
+services:
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    networks:
+      - server
+    ports:
+      - 8183:8181
+
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - $APPDATA/media/tautulli/config:/config
+      - $APPDATA/media/plex/Library/Application Support/Plex Media Server/Logs:/logs:ro
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

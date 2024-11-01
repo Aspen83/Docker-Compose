@@ -1,0 +1,21 @@
+services:
+  speedtest:
+    image: lscr.io/linuxserver/speedtest-tracker:latest
+    container_name: speedtest
+    networks:
+      - server
+    ports:
+      - 7080:80
+      - 7443:443
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+      DB_CONNECTION: sqlite
+      APP_KEY: base64:QoBW7Cb5dg4vCy0ms+JVfNvaOtabb9LNZ3CpR+XrYw0=
+    volumes:
+      - $APPDATA/services/speedtest:/config
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

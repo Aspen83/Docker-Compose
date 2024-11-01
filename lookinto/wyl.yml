@@ -1,0 +1,38 @@
+services:
+  node-bootstrap:
+    image: aceberg/node-bootstrap
+    container_name: bootstrap
+    networks:
+      - default
+    ports:
+      - 8850:8850
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  wyl:
+    image: aceberg/watchyourlan
+    networks:
+      default:
+        ipv4_address: 10.0.5.100
+    container_name: wyl
+    restart: unless-stopped
+    command: "-n http://10.0.0.172:8850"   # put your server IP or DNS name here
+    depends_on:
+      - node-bootstrap
+    volumes:
+      - $DOCKERDIR/appdata/wyl:/data
+    environment:
+      TZ: $TZ
+      PUID: $PUID
+      PGID: $PGID
+      IFACE: "enp1s0"                    # required: 1 or more interface
+      THEME: "darkly"                   # optional
+      IGNOREIP: "no"                    # optional
+      DBPATH: "/data/db.sqlite"         # optional, default: /data/db.sqlite
+      GUIIP: "0.0.0.0"                  # optional, default: localhost
+      GUIPORT: "8840"                   # optional, default: 8840
+      TIMEOUT: "120"                    # optional, time in seconds, default: 60
+    security_opt:
+      - no-new-privileges:true
+

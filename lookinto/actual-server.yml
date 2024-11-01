@@ -1,0 +1,11 @@
+services:
+  actual-server:
+    container_name: actual_budget
+    image: ghcr.io/actualbudget/actual-server:latest
+    networks:
+      - server
+    ports:
+      - 5006:5006
+    volumes:
+      - $APPDATA/data/actural-budget:/data
+    restart: unless-stopped

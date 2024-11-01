@@ -1,0 +1,54 @@
+services:
+  mc-server-bedrock:
+    image: itzg/minecraft-bedrock-server:latest
+    container_name: mc-server-bedrock
+    networks:
+      - server
+    ports:
+      - 19132:19132/udp
+
+    environment:
+      EULA: TRUE
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+      SERVER_NAME: Family Server :-)
+      LEVEL_NAME: Poop World
+      ONLINE_MODE: false
+    volumes:
+      - $APPDATA/minecraft/server3:/data
+
+    stdin_open: true
+    tty: true
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+  mc-server-java:
+    image: itzg/minecraft-server:latest
+    container_name: mc-server-java
+    networks:
+      - server
+    ports:
+      - 25565:25565
+
+    environment:
+      EULA: TRUE
+      TZ: 'America/New_York'
+      PUID: 1000
+      GUID: 1000
+      SERVER_NAME: Family Java :-)
+      LEVEL_NAME: Java World
+      ONLINE_MODE: false
+    volumes:
+      - $APPDATA/minecraft/java:/data
+
+    stdin_open: true
+    tty: true
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    
+# docker run -d -p 25565:25565 --name mc -v mc-data:/data itzg/minecraft-server

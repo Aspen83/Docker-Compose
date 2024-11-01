@@ -1,0 +1,19 @@
+services:
+  prowlarr:
+    image: ghcr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    networks:
+      - server
+    ports: 
+      - 9696:9696
+
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+    volumes:
+      - $APPDATA/arr/prowlarr:/config
+
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

@@ -1,0 +1,17 @@
+services:
+  hydra2:
+    image: ghcr.io/hotio/nzbhydra2:latest
+    container_name: hydra
+    networks:
+      - server    
+    environment:
+      PUID: 1000
+      PGID: 1000
+      UMASK: 002
+      TZ: America/New_York
+    volumes:
+      - $APPDATA/arr/hydra:/config
+      - $DATADIR/downloads:/data/downloads
+    ports:
+      - 5076:5076
+    restart: unless-stopped

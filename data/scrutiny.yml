@@ -1,0 +1,22 @@
+services:
+  scrutiny:
+    container_name: scrutiny
+    image: ghcr.io/analogj/scrutiny:master-omnibus
+    stdin_open: true
+    tty: true
+    networks:
+      - server
+    ports:
+      - 8180:8080
+      - 8186:8086
+    volumes:
+      - $APPDATA/services/scrutiny:/opt/scrutiny/config
+      - $APPDATA/services/influxdb2:/opt/scrutiny/influxdb
+      - /run/udev:/run/udev:ro
+    cap_add:
+      - SYS_RAWIO
+    devices:
+      - /dev/sda
+      - /dev/sdb
+    restart: always
+## smartctl --scan

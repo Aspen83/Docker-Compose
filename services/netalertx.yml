@@ -1,0 +1,13 @@
+services:
+  netalertx:
+    container_name: netalertx
+    hostname: netalertx
+    privileged: true
+    image: jokobsk/netalertx:latest
+    environment:
+      TZ: America/New_York
+    restart: always
+    volumes:
+      - $APPDATA/services/netalertx/db:/app/db
+      - $APPDATA/services/netalertx/config:/app/config
+    network_mode: host

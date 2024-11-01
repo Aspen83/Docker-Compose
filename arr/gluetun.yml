@@ -1,0 +1,31 @@
+services:
+  gluetun:
+    image: qmcgaw/gluetun
+    container_name: gluetun
+    networks:
+      - server
+    ports:
+      - 8000:8000
+      - 8181:8181
+      - 6881:6881
+      - 6881:6881/udp
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun
+
+    environment:
+      TZ: 'America/New_York'
+      PUID: 1000
+      PGID: 1000
+      VPN_SERVICE_PROVIDER: nordvpn
+      VPN_TYPE: openvpn
+      OPENVPN_USER: cQXDNDAiToWrzhmRMdUy55Cb
+      OPENVPN_PASSWORD: HumVS73GkB85XcVLwxfX5ier
+      SERVER_COUNTRIES: United States
+    volumes:
+      - $APPDATA/arr/gluetun:/gluetun
+
+    security_opt:
+      - no-new-privileges:true
+    restart: always

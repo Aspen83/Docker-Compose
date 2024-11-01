@@ -1,0 +1,26 @@
+services:
+  # Homepage - Application Dashboard
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+    # profiles: ["apps", "all"]
+    networks:
+#      - socket_proxy
+      - server
+#    command: -H tcp://socket-proxy:2375
+    ports:
+      - 3000:3000
+    volumes:
+      - $DOCKERDIR/appdata/services/homepage/config:/app/config
+      - $DOCKERDIR/appdata/services/homepage/images:/app/public/images
+      - $DATADIR:/app/public/data
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /home/mperk/drive1:/mnt/drive1:ro
+      - /home/mperk/drive2:/mnt/drive2:ro
+    environment:
+      TZ: America/New_York
+      PUID: 1000
+      PGID: 1000

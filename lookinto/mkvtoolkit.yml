@@ -1,0 +1,15 @@
+services:
+  mkvtoolnix:
+    image: jlesage/mkvtoolnix
+    container_name: mkvtoolnix
+    networks:
+      - server
+    ports:
+      - 5800:5800
+    volumes:
+      - $APPDATA/media/mkvtoolnix:/config:rw
+      - $MEDIADIR:/storage:rw
+    environment:
+      TZ: America/New_York
+      DARK_MODE: 1
+      

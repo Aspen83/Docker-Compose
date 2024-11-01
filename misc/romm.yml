@@ -1,0 +1,43 @@
+services:
+  romm:
+    image: rommapp/romm:latest
+    container_name: romm
+    restart: unless-stopped
+    networks:
+      - server
+    environment:
+      - DB_HOST=romm-db
+      - DB_NAME=romm # Should match MYSQL_DATABASE in mariadb
+      - DB_USER=romm-user # Should match MYSQL_USER in mariadb
+      - DB_PASSWD=malo6256 # Should match MYSQL_PASSWORD in mariadb
+      - IGDB_CLIENT_ID=ikxkr72mqp01vvlputsht0c223uebp # Generate an ID and SECRET in IGDB
+      - IGDB_CLIENT_SECRET=1qr0v3nu43z692pbmz8pzwx5mlcu1d # https://api-docs.igdb.com/#account-creation
+      - MOBYGAMES_API_KEY=moby_pTLu3r2EX6SFliCKpxJhrDh3D0B # https://www.mobygames.com/info/api/
+      - ROMM_AUTH_SECRET_KEY=d927e0c01a4a3d10e8cfc0902e3e51f6a37ddd6203d3bbebbb10536620a122fa # Generate a key with `openssl rand -hex 32`
+      - ROMM_AUTH_USERNAME=admin
+      - ROMM_AUTH_PASSWORD=malo6256 # default: admin
+    volumes:
+      - $APPDATA/misc/romm/romm_resources:/romm/resources # Resources fetched from IGDB (covers, screenshots, etc.)
+      - $APPDATA/misc/romm/romm_redis_data:/redis-data # Cached data for background tasks
+      - $ROMDIR/library/roms:/romm/library/roms:rw # Your game library
+#      - /path/to/assets:/romm/assets # Uploaded saves, states, etc.
+      - $APPDATA/misc/romm/config:/romm/config # Path where config.yml is stored
+    ports:
+      - 8282:8080
+    depends_on:
+      - romm-db
+
+  romm-db:
+    image: mariadb:latest
+    container_name: romm-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=Aspen6256! # Use a unique, secure password
+      - MYSQL_DATABASE=romm
+      - MYSQL_USER=romm-user
+      - MYSQL_PASSWORD=malo6256
+    volumes:
+      - $APPDATA/misc/romm/romm-db/:/var/lib/mysql
+    networks:
+      - server
+#romm-5b08f7261178
